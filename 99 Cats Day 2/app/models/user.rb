@@ -1,7 +1,7 @@
 class User < ApplicationRecord
     validates :username, presence: true
     validates :password_digest, presence: true
-    validates :password, length: {minimum: 6}
+    validates :password, length: {minimum: 6}, allow_nil: true
     validates :session_token, presence: true, uniqueness: true
     
     after_initialize :ensure_session_token
@@ -21,9 +21,9 @@ class User < ApplicationRecord
     end
 
     def self.find_by_credentials(username, password)
-        @user = User_find_by(username: username)
-        if user and user.is_password?(password)
-            return user
+        @user = User.find_by(username: username)
+        if @user and @user.is_password?(password)
+            return @user
         else
             return nil
         end
@@ -34,9 +34,10 @@ class User < ApplicationRecord
         @password = password
     end
 
-    def is_password?
+    def is_password?(password)
         password_object = BCrypt::Password.new(self.password_digest)
         password_object.is_password?(password)
+
     end
 
 end

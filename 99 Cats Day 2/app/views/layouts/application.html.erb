@@ -10,9 +10,13 @@
 
   <body>
     <%if logged_in?%>
-      <h3>Welcome <%=@user.username%></h3>
-      <a href="<%= session_url %>">Log Out</a>
-      <input type="hidden" name="_method" value="DELETE">
+      <h3>Welcome <%=current_user.username%></h3>
+      <form action="<%= session_url %>" value="POST">
+        <input type="hidden" name="_method" value="DESTROY">
+        <button>Click here to log out</button>
+      </form>
+      <!-- <a href="<%= session_url %>" name="method" value="DELETE">Log Out</a> -->
+      <!-- <input type="submit" id="logout" value="Log out"> -->
     <%else%>
       <a href="<%= new_session_url %>">Log in</a>
       <br>
