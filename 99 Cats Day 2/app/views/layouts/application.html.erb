@@ -9,6 +9,15 @@
   </head>
 
   <body>
+    <%if logged_in?%>
+      <h3>Welcome <%=@user.username%></h3>
+      <a href="<%= session_url %>">Log Out</a>
+      <input type="hidden" name="_method" value="DELETE">
+    <%else%>
+      <a href="<%= new_session_url %>">Log in</a>
+      <br>
+      <a href="<%= new_user_url %>">Click here to create a new profile</a>
+    <%end%>
     <%= yield %>
   </body>
 </html>
